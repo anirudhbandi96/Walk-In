@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import Firebase
 
 class SignUpViewController: UIViewController , UITextFieldDelegate {
 
@@ -20,7 +21,62 @@ class SignUpViewController: UIViewController , UITextFieldDelegate {
     
     
     @IBAction func signUp(sender: AnyObject) {
+        let username = self.username.text
+        let password = self.password.text
+        
+        if username != ""  && password != "" {
+            
+            // Set Email and Password for the New User.
+            
+            DataService.dataService.BASE_REF.createUser(username, password: password, withValueCompletionBlock: { error, result in
+                
+                if error != nil {
+                    
+                    // There was a problem.
+                    self.signupErrorAlert("Oops!", message: "Having some trouble creating your account. Try again.")
+                    print(error.description)
+                    
+                } else {
+                    
+                    // Create and Login the New User with authUser
+                    DataService.dataService.BASE_REF.authUser(username, password: password, withCompletionBlock: {
+                        err, authData in
+                        
+                        let user = ["provider": authData.provider!, "username": username! ]
+                        
+                        // Seal the deal in DataService.swift.
+                        DataService.dataService.createNewAccount(authData.uid, user: user)
+                    })
+                    
+                    // Store the uid for future access - handy!
+                    NSUserDefaults.standardUserDefaults().setValue(result ["uid"], forKey: "uid")
+                    
+                    // Enter the app.
+                    print("success")
+                   
+                }
+            })
+            
+        } else {
+            signupErrorAlert("Oops!", message: "Don't forget to enter your password, and a username.")
+        }
+
     }
+    func signupErrorAlert(title: String, message: String) {
+        
+        // Called upon signup error to let the user know signup didn't work.
+        
+        let alert = UIAlertController(title: title, message: message, preferredStyle: UIAlertControllerStyle.Alert)
+        let action = UIAlertAction(title: "Ok", style: .Default, handler: nil)
+        alert.addAction(action)
+        presentViewController(alert, animated: true, completion: nil)
+    }
+    
+    @IBAction func close(sender: AnyObject) {
+        dismissViewControllerAnimated(true, completion: nil)
+    }
+
+    
     
     @IBOutlet var viewWidth: NSLayoutConstraint!
     
@@ -42,6 +98,16 @@ class SignUpViewController: UIViewController , UITextFieldDelegate {
     @IBOutlet var signUpButtonHeight: NSLayoutConstraint!
     @IBOutlet var signUpButtonWidth: NSLayoutConstraint!
     @IBOutlet var usernameTextFieldWidth: NSLayoutConstraint!
+    
+    
+    @IBOutlet var closeButtonWidth: NSLayoutConstraint!
+    
+    @IBOutlet var closeButtonHeight: NSLayoutConstraint!
+    
+    
+    
+    
+    
     var flag = 0
     
     override func viewDidLoad() {
@@ -58,6 +124,9 @@ class SignUpViewController: UIViewController , UITextFieldDelegate {
         self.password.delegate = self
         
         self.blurredView.backgroundColor = UIColor(red: 0, green: 0, blue: 0, alpha: 0.5)
+        
+        closeButtonHeight.constant = screenHeight * 0.05
+        closeButtonWidth.constant = closeButtonHeight.constant
         
         viewWidth.constant = 0.8 * screenWidth
         viewHeight.constant = 0.6 * screenHeight

@@ -232,20 +232,36 @@
                                     <constraint firstItem="gIa-Wd-PF0" firstAttribute="top" secondItem="a32-Lo-HYZ" secondAttribute="top" constant="8" id="voS-GX-hrc"/>
                                 </constraints>
                             </view>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="ho2-XY-q6q">
+                                <rect key="frame" x="532" y="20" width="48" height="42"/>
+                                <animations/>
+                                <constraints>
+                                    <constraint firstAttribute="width" constant="48" id="4WD-iK-ore"/>
+                                    <constraint firstAttribute="height" constant="42" id="zTo-Og-FpU"/>
+                                </constraints>
+                                <state key="normal" image="close.png"/>
+                                <connections>
+                                    <action selector="close:" destination="VmK-7D-gKK" eventType="touchUpInside" id="Qiw-ay-eVF"/>
+                                </connections>
+                            </button>
                         </subviews>
                         <animations/>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <constraints>
+                            <constraint firstItem="ho2-XY-q6q" firstAttribute="top" secondItem="50u-40-DYy" secondAttribute="bottom" id="0I7-yx-1Me"/>
                             <constraint firstItem="byf-cC-6ve" firstAttribute="top" secondItem="ZZQ-1z-sNU" secondAttribute="bottom" id="0zY-Ua-u6n"/>
                             <constraint firstItem="a32-Lo-HYZ" firstAttribute="top" secondItem="50u-40-DYy" secondAttribute="bottom" constant="125" id="2Nv-qz-tVR"/>
                             <constraint firstItem="ZZQ-1z-sNU" firstAttribute="top" secondItem="ZTt-GV-f9r" secondAttribute="top" id="5EY-sh-7Sd"/>
                             <constraint firstItem="a32-Lo-HYZ" firstAttribute="centerX" secondItem="ZZQ-1z-sNU" secondAttribute="centerX" id="LOb-6q-AuU"/>
                             <constraint firstItem="ZZQ-1z-sNU" firstAttribute="leading" secondItem="ZTt-GV-f9r" secondAttribute="leading" id="P9c-yH-9qd"/>
+                            <constraint firstItem="ho2-XY-q6q" firstAttribute="trailing" secondItem="ZTt-GV-f9r" secondAttribute="trailingMargin" id="QCa-r0-ShJ"/>
                             <constraint firstAttribute="trailing" secondItem="ZZQ-1z-sNU" secondAttribute="trailing" id="TBr-mN-X5h"/>
                         </constraints>
                     </view>
                     <connections>
                         <outlet property="blurredView" destination="a32-Lo-HYZ" id="Rmb-FS-j4o"/>
+                        <outlet property="closeButtonHeight" destination="zTo-Og-FpU" id="DRZ-2h-gQ3"/>
+                        <outlet property="closeButtonWidth" destination="4WD-iK-ore" id="Hph-KP-Jvv"/>
                         <outlet property="password" destination="QPM-rJ-PjD" id="3pr-qc-x1E"/>
                         <outlet property="passwordTextFieldHeight" destination="wC5-Gv-78C" id="vn0-vd-JTY"/>
                         <outlet property="passwordToSignUp" destination="VPz-2m-3Zb" id="AEd-vV-8Ff"/>
@@ -268,10 +284,11 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="3Hx-Nq-zRK" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="870" y="313"/>
+            <point key="canvasLocation" x="864" y="350"/>
         </scene>
     </scenes>
     <resources>
+        <image name="close.png" width="128" height="128"/>
         <image name="snow.jpg" width="1080" height="1920"/>
     </resources>
 </document>
